@@ -1,2 +1,4 @@
-package com.cbt.portal.client.vo.request;public class StudentAnswerClientRequest {
+package com.cbt.portal.client.vo.request;
+
+public class StudentAnswerClientRequest {
 }
