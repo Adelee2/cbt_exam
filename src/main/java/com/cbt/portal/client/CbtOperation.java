@@ -3,32 +3,44 @@ package com.cbt.portal.client;
 import com.cbt.portal.service.CbtService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.servlet.ServletContext;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-@Path("api/v1")
+@Path("v1")
 public class CbtOperation {
     @Inject
     private CbtService cbtService;
+    @Context
+    private ServletContext context;
+
     @Path("/login")
     @POST
-    public void login(){
+    @Produces(MediaType.APPLICATION_JSON)
+    public void login() {
 
     }
-    @Path("/:studentid/:courseid/questions")
+
+    @Path("/{studentid}/{courseid}/questions")
     @POST
-    public void start(){
+    @Produces(MediaType.APPLICATION_JSON)
+    public void start(@PathParam("studentid") String studentid,@PathParam("courseid") String courseid) {
 
     }
-    @Path("/:studentid/:courseid/answer")
+
+    @Path("/{studentid}/{courseid}/answer")
     @POST
-    public void studentanswer(){
+    @Produces(MediaType.APPLICATION_JSON)
+    public void studentanswer(@PathParam("studentid") String studentid,@PathParam("courseid") String courseid) {
 //        cbtService.updateStudentAnswer();
     }
-    @Path("/:studentid/:courseid/result")
-    @GET
-    public void getresult(){
 
+    @Path("/{studentid}/{courseid}/result")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getresult(@PathParam("studentid") String studentid,@PathParam("courseid") String courseid) {
+        return Response.status(200).entity("studentid= "+ studentid+", courseid= "+courseid+" <br/> <a href='"+context.getContextPath()+"'>Back</a>").build();
     }
 }
