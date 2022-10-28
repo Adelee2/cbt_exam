@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -86,12 +88,13 @@ public class CbtOperation {
         for (InputPart inputPart : inputParts) {
             try {
                 MultivaluedMap<String, String> header = inputPart.getHeaders();
+
                 String fileName = getFileName(header);
                 // convert the uploaded file to inputstream
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
                 byte[] bytes = IOUtils.toByteArray(inputStream);
-                String path = System.getProperty("user.home") + File.separator + "uploads";
-                System.out.println("\n-----------\nfile uploaded to "+path+"\n-----------\n");
+                String path = System.getProperty("user.dir") + File.separator + "uploads";
+//                System.out.println("\n-----------\nfile uploaded to "+path+"\n-----------\n");
                 File customDir = new File(path);
                 if (!customDir.exists()) {
                     customDir.mkdir();
@@ -119,14 +122,23 @@ public class CbtOperation {
 
     private String getFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
+        Date date = new Date();
         for (String filename : contentDisposition) {
             if ((filename.trim().startsWith("filename"))) {
                 String[] name = filename.split("=");
                 String finalFileName = name[1].trim().replaceAll("\"", "");
-                return finalFileName;
+                String [] _finalFileName = finalFileName.split("\\.");
+                String filetype = _finalFileName[_finalFileName.length-1];
+                String[] resultFilename = Arrays.copyOfRange(_finalFileName,0,_finalFileName.length-2);
+                String _finalresultFileName = String.join(".",resultFilename)+date.getTime()+"."+filetype;
+
+                if(filetype.equalsIgnoreCase("png") || filetype.equalsIgnoreCase("jpg")|| filetype.equalsIgnoreCase("jpeg")){
+                    return _finalresultFileName;
+                }
+
             }
         }
-        return "unknown";
+        return "File not Allowed!!";
     }
     // Utility method
     private void writeFile(byte[] content, String filename) throws IOException {
