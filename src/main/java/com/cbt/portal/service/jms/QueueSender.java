@@ -3,14 +3,16 @@ package com.cbt.portal.service.jms;
 import com.cbt.portal.service.vo.request.StudentAnswerRequest;
 
 import javax.annotation.Resource;
+import javax.ejb.Stateless;
 import javax.jms.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Stateless
 public class QueueSender {
-    @Resource(lookup = "java:/ConnectionFactory")
+//    @Resource(lookup="java:/ConnectionFactory")
     private ConnectionFactory connectionFactory;
-    @Resource(lookup = "java:/jms/queue/CBTQueue")
+//    @Resource(lookup = "java:/jms/queue/CBTQueue")
     private Queue cbtAnswerQueue;
     private Connection connection = null;
     private Session session = null;
