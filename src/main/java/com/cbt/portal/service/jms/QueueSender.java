@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 
 @Stateless
 public class QueueSender {
-//    @Resource(lookup="java:/ConnectionFactory")
+    @Resource(mappedName="java:/ConnectionFactory")
     private ConnectionFactory connectionFactory;
-//    @Resource(lookup = "java:/jms/queue/CBTQueue")
+    @Resource(mappedName = "java:/jms/queue/CBTQueue")
     private Queue cbtAnswerQueue;
     private Connection connection = null;
     private Session session = null;
