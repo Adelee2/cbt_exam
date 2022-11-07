@@ -1,15 +1,13 @@
 package com.cbt.portal.core.model.repository.impl;
 
-import com.cbt.portal.core.model.Students;
-import com.cbt.portal.core.model.repository.StudentRepository;
+import com.cbt.portal.core.model.StudentExamAnswer;
+import com.cbt.portal.core.model.repository.StudentExamAnswerRepository;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateless
-public class StudentRepositoryImpl implements StudentRepository {
+public class StudentExamAnswerRepositoryImpl implements StudentExamAnswerRepository {
     @PersistenceContext(unitName = "PortalPU")
     private EntityManager em;
 
@@ -23,7 +21,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public List<Students> login(String matricNum, String password) {
+    public List<StudentExamAnswer> studentAnswers(Integer studentId) {
         return null;
     }
 }

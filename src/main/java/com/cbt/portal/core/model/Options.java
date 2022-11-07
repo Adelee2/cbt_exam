@@ -3,23 +3,17 @@ package com.cbt.portal.core.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "student_courses")
-@NamedQueries(
-        {
-                @NamedQuery(name = "StudentCourses.findByStudentId",query = "SELECT sc from StudentCourses sc WHERE sc.course=:courseId")
-        }
-)
-public class StudentCourses implements Serializable {
+@Table(name = "options")
+public class Options implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer student_id;
-    @OneToMany(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "id")
-    private List<Courses> course;
+    private String name;
+    private String value;
+    @ManyToOne
+    private Questions ques;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdAt;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -33,20 +27,28 @@ public class StudentCourses implements Serializable {
         this.id = id;
     }
 
-    public Integer getStudent_id() {
-        return student_id;
+    public String getName() {
+        return name;
     }
 
-    public void setStudent_id(Integer student_id) {
-        this.student_id = student_id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Courses> getCourse() {
-        return course;
+    public String getValue() {
+        return value;
     }
 
-    public void setCourse(List<Courses> course) {
-        this.course = course;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Questions getQues() {
+        return ques;
+    }
+
+    public void setQues(Questions ques) {
+        this.ques = ques;
     }
 
     public Date getCreatedAt() {
